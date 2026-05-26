@@ -1,6 +1,7 @@
 package com.sheepblue.devhub
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,16 +32,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import coil.compose.AsyncImage
 import com.sheepblue.devhub.ui.theme.DevHubTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // TODO: chamar a função do service
-        //RetrofitInitializer().gitHubService.findProfileBy("SouzaEdgar")
+        lifecycleScope.launch {
+            val service = RetrofitInitializer().gitHubService.findProfileBy("SouzaEdgar")
+            Log.d("API", "Nickname: ${service.name}")
+            Log.d("API", "User: ${service.login}")
+            Log.d("API", "Bio: ${service.bio}")
+            Log.d("API", "Avatar: ${service.avatar_url}")
+        }
 
         setContent {
             DevHubTheme {
@@ -58,7 +66,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+// TODO: passar os dados coletados da API para a UI
 
 @Composable
 fun UserScreen() {
