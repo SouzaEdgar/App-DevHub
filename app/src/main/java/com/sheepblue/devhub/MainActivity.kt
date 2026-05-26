@@ -38,6 +38,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // TODO: chamar a função do service
+        //RetrofitInitializer().gitHubService.findProfileBy("SouzaEdgar")
+
         setContent {
             DevHubTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
