@@ -23,6 +23,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,23 +34,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.lifecycleScope
 import coil.compose.AsyncImage
 import com.sheepblue.devhub.ui.theme.DevHubTheme
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        lifecycleScope.launch {
-            val service = RetrofitInitializer().gitHubService.findProfileBy("SouzaEdgar")
-            Log.d("API", "Nickname: ${service.name}")
-            Log.d("API", "User: ${service.login}")
-            Log.d("API", "Bio: ${service.bio}")
-            Log.d("API", "Avatar: ${service.avatar_url}")
-        }
 
         setContent {
             DevHubTheme {
@@ -58,7 +50,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        UserScreen()
+                        UserScreen("torvalds")
                     }
                 }
             }
@@ -66,10 +58,28 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// TODO: passar os dados coletados da API para a UI
+fun naoNulo(text: String?): String {
+    return text ?: "-"
+}
+
 
 @Composable
-fun UserScreen() {
+fun UserScreen(
+    user: String,
+    webClient: GitHubWebClient = GitHubWebClient()
+) {
+    val foundUser by webClient.findProfileById(user).collectAsState(initial = null)
+    foundUser?.let { userProfile ->
+        userProfile.login
+        userProfile.name
+        userProfile.bio
+        userProfile.avatar_url
+    }
+    Log.d("API", "Name: ${naoNulo(foundUser?.name)}")
+    Log.d("API", "Login: ${naoNulo(foundUser?.login)}")
+    Log.d("API", "BIO: ${naoNulo(foundUser?.bio)}")
+    Log.d("API", "Avatar: ${naoNulo(foundUser?.avatar_url)}")
+
     Row {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -84,11 +94,11 @@ fun UserScreen() {
                 )
             ) {
                 AsyncImage(
-                    model = "https://avatars.githubusercontent.com/u/65196924?v=4",
+                    model = naoNulo(foundUser?.avatar_url),
                     placeholder = painterResource(R.drawable.ic_sharp_account_circle_24),
                     contentDescription = "User Avatar",
                     modifier = Modifier
-                        .size(120.dp)
+                        .size(140.dp)
                         .align(Alignment.BottomCenter)
                         .offset(y = 120.dp/2)
                         .clip(CircleShape)
@@ -96,14 +106,14 @@ fun UserScreen() {
             }
             Spacer(modifier = Modifier.height(120.dp/2))
             Text(
-                "Apelido do usuario",
+                naoNulo(foundUser?.name),
                 fontSize = 30.sp
             )
             Text(
-                "Nome do usuario",
+                naoNulo(foundUser?.login),
                 fontWeight = FontWeight.Bold
             )
-            Text("Descrição do usuario (BIO)")
+            Text(naoNulo(foundUser?.bio))
         }
     }
 }
@@ -118,7 +128,7 @@ fun UserScreenPreview() {
         ) {
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp)
+                .height(140.dp)
                 .background(
                     Color.DarkGray,
                     shape = RoundedCornerShape(bottomStart = 22.dp, bottomEnd = 22.dp)
