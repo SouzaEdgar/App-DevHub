@@ -1,6 +1,5 @@
-package com.sheepblue.devhub.ui.screen
+package com.sheepblue.devhub.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,22 +13,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.sheepblue.devhub.GitHubProfileWeb
-import com.sheepblue.devhub.GitHubWebClient
 import com.sheepblue.devhub.R
-import okhttp3.internal.userAgent
+import com.sheepblue.devhub.ui.state.UserProfileUiState
 
 @Composable
 fun UserProfile(userInfos: UserProfileUiState) {
@@ -69,51 +63,4 @@ fun UserProfile(userInfos: UserProfileUiState) {
             Text(userInfos.bio)
         }
     }
-}
-// Classe exclusiva para receber tudo que o composable precisa
-data class UserProfileUiState(
-    val login: String,
-    val name: String,
-    val bio: String,
-    val image: String
-)
-
-// mapper para passar o valor de GitHubProfileWeb para UserProfileUiState
-//  até pq o recebido da API é nullable e assim ja consigo tratar para utilizar no compose
-fun convertToUI(userGitHub: GitHubProfileWeb): UserProfileUiState {
-    return UserProfileUiState(
-        login = userGitHub.login,
-        name = userGitHub.name ?: "~ Sem Nome ~",
-        bio = userGitHub.bio ?: "~ Sem Bio ~",
-        image = userGitHub.avatar_url ?: ""
-    )
-}
-
-
-@Composable
-fun UserScreen(
-    user: String,
-    webClient: GitHubWebClient = GitHubWebClient()
-) {
-    val foundUser by webClient.findProfileById(user).collectAsState(initial = null)
-    foundUser?.let { userInfos ->
-        Log.d("API", "$userInfos")
-        UserProfile(convertToUI(userInfos))
-    }
-}
-
-// Aplicando a conversão de objetos para testar a mudança de texto
-@Preview(showBackground = true)
-@Composable
-fun UserScreenPreview() {
-    UserProfile(
-        userInfos = convertToUI(
-            userGitHub = GitHubProfileWeb(
-                login = "torvalds",
-                name = "Linus Torvalds",
-                bio = null,
-                avatar_url = "https://avatars.githubusercontent.com/u/1024025?v=4"
-            )
-        )
-    )
 }

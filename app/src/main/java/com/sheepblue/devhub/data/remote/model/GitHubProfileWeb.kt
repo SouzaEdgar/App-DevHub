@@ -1,4 +1,4 @@
-package com.sheepblue.devhub
+package com.sheepblue.devhub.data.remote.model
 
 data class GitHubProfileWeb(
     val login: String,

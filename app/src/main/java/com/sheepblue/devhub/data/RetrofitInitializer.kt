@@ -1,5 +1,6 @@
-package com.sheepblue.devhub
+package com.sheepblue.devhub.data
 
+import com.sheepblue.devhub.data.remote.service.GitHubService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

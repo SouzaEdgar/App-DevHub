@@ -1,5 +1,6 @@
-package com.sheepblue.devhub
+package com.sheepblue.devhub.data.remote.service
 
+import com.sheepblue.devhub.data.remote.model.GitHubProfileWeb
 import retrofit2.http.GET
 import retrofit2.http.Path
 
