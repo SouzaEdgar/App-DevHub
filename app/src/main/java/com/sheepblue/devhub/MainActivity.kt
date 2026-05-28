@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        UserScreen("torvalds")
+                        UserScreen("octocat")
                     }
                 }
             }
