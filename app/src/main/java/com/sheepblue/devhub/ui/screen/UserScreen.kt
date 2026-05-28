@@ -17,7 +17,8 @@ fun UserScreen(
     LaunchedEffect(user) {
         webClient.findProfileBy(user)
     }
-    Log.d("API", "uiState 2 -> $uiState")
+    Log.d("API", "uiState -> $uiState")
+    Log.d("API","repoLenght: ${uiState.repositories.size}")
     UserProfile(uiState)
 }
 

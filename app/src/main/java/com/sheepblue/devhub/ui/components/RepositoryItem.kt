@@ -15,9 +15,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sheepblue.devhub.data.remote.model.GitHubRepository
+import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 
 @Composable
-fun RepositoryItem(repo: GitHubRepository) {
+fun RepositoryItem(repo: UserRepositoryUiState) {
     Card(
         modifier = Modifier.padding(8.dp),
         elevation = CardDefaults.cardElevation(4.dp)
@@ -32,7 +33,7 @@ fun RepositoryItem(repo: GitHubRepository) {
                 fontSize = 24.sp,
                 color = Color.White
             )
-            if (repo.description.isNotBlank()) {
+            if (!repo.description.isBlank()) {
                 Text(
                     repo.description,
                     modifier = Modifier
@@ -48,7 +49,7 @@ fun RepositoryItem(repo: GitHubRepository) {
 @Composable
 fun RepositoryItemPreview() {
     RepositoryItem(
-        repo = GitHubRepository(
+        repo = UserRepositoryUiState(
             name = "TEste",
             description = "my personal information"
         )

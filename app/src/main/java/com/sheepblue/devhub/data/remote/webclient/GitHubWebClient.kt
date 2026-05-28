@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.sheepblue.devhub.data.RetrofitInitializer
+import com.sheepblue.devhub.data.remote.model.GitHubRepository
 import com.sheepblue.devhub.data.remote.service.GitHubService
 import com.sheepblue.devhub.ui.state.UserProfileUiState
+import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 
 class GitHubWebClient (private val service: GitHubService = RetrofitInitializer().gitHubService) {
 
@@ -19,14 +21,17 @@ class GitHubWebClient (private val service: GitHubService = RetrofitInitializer(
         val reposResponse = service.findRepositoryBy(user)
 
         // tira a necessidade do convertToUI e aplica o mapper diretamente na mudança de state
+        //  tanto para o profile quanto para o repository
         uiState = UserProfileUiState(
             login = profileResponse.login,
             name = profileResponse.name?: "~ sem nome ~",
             bio = profileResponse.bio?: "~ sem bio ~",
             image = profileResponse.avatar_url?: "",
             repositories = reposResponse.map { repo ->
-                repo.name
-                repo.description
+                UserRepositoryUiState(
+                    name = repo.name?: "",
+                    description = repo.description?: ""
+                )
             }
         )
     }
