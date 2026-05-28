@@ -29,14 +29,10 @@ import coil.compose.AsyncImage
 import com.sheepblue.devhub.GitHubProfileWeb
 import com.sheepblue.devhub.GitHubWebClient
 import com.sheepblue.devhub.R
-
-
-fun naoNulo(text: String?): String {
-    return text ?: "-"
-}
+import okhttp3.internal.userAgent
 
 @Composable
-fun UserProfile(userInfos: GitHubProfileWeb) {
+fun UserProfile(userInfos: UserProfileUiState) {
     Row {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -51,7 +47,7 @@ fun UserProfile(userInfos: GitHubProfileWeb) {
                 )
             ) {
                 AsyncImage(
-                    model = naoNulo(userInfos.avatar_url),
+                    model = userInfos.image,
                     placeholder = painterResource(R.drawable.ic_sharp_account_circle_24),
                     contentDescription = "User Avatar",
                     modifier = Modifier
@@ -63,14 +59,14 @@ fun UserProfile(userInfos: GitHubProfileWeb) {
             }
             Spacer(modifier = Modifier.height(120.dp/2))
             Text(
-                naoNulo(userInfos.name),
+                userInfos.name,
                 fontSize = 30.sp
             )
             Text(
-                naoNulo(userInfos.login),
+                userInfos.login,
                 fontWeight = FontWeight.Bold
             )
-            Text(naoNulo(userInfos.bio))
+            Text(userInfos.bio)
         }
     }
 }
@@ -82,6 +78,17 @@ data class UserProfileUiState(
     val image: String
 )
 
+// mapper para passar o valor de GitHubProfileWeb para UserProfileUiState
+//  até pq o recebido da API é nullable e assim ja consigo tratar para utilizar no compose
+fun convertToUI(userGitHub: GitHubProfileWeb): UserProfileUiState {
+    return UserProfileUiState(
+        login = userGitHub.login,
+        name = userGitHub.name ?: "~ Sem Nome ~",
+        bio = userGitHub.bio ?: "~ Sem Bio ~",
+        image = userGitHub.avatar_url ?: ""
+    )
+}
+
 
 @Composable
 fun UserScreen(
@@ -90,24 +97,23 @@ fun UserScreen(
 ) {
     val foundUser by webClient.findProfileById(user).collectAsState(initial = null)
     foundUser?.let { userInfos ->
-        // TODO: converter o objeto GitHubProfileWeb para ProfileUiState
-        UserProfile(userInfos)
+        Log.d("API", "$userInfos")
+        UserProfile(convertToUI(userInfos))
     }
-    Log.d("API", "Name: ${naoNulo(foundUser?.name)}")
-    Log.d("API", "Login: ${naoNulo(foundUser?.login)}")
-    Log.d("API", "BIO: ${naoNulo(foundUser?.bio)}")
-    Log.d("API", "Avatar: ${naoNulo(foundUser?.avatar_url)}")
 }
 
+// Aplicando a conversão de objetos para testar a mudança de texto
 @Preview(showBackground = true)
 @Composable
 fun UserScreenPreview() {
     UserProfile(
-        userInfos = GitHubProfileWeb(
-            login = "torvalds",
-            name = "Linus Torvalds",
-            bio = "Teste teste",
-            avatar_url = "https://avatars.githubusercontent.com/u/1024025?v=4"
+        userInfos = convertToUI(
+            userGitHub = GitHubProfileWeb(
+                login = "torvalds",
+                name = "Linus Torvalds",
+                bio = null,
+                avatar_url = "https://avatars.githubusercontent.com/u/1024025?v=4"
+            )
         )
     )
 }
