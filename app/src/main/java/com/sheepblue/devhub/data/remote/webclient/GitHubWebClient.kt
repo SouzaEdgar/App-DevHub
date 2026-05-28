@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.sheepblue.devhub.data.RetrofitInitializer
-import com.sheepblue.devhub.data.remote.model.GitHubRepository
 import com.sheepblue.devhub.data.remote.service.GitHubService
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState

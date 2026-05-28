@@ -7,6 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.components.UserProfile
 import com.sheepblue.devhub.ui.state.UserProfileUiState
+import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 
 @Composable
 fun UserScreen(
@@ -28,10 +29,24 @@ fun UserScreen(
 fun UserScreenPreview() {
     UserProfile(
         userInfos = UserProfileUiState(
-                login = "torvalds",
-                name = "Linus Torvalds",
-                bio = "~ sem bio ~",
-                image = "https://avatars.githubusercontent.com/u/1024025?v=4"
+            login = "torvalds",
+            name = "Linus Torvalds",
+            bio = "~ sem bio ~",
+            image = "https://avatars.githubusercontent.com/u/1024025?v=4",
+            repositories = listOf(
+                UserRepositoryUiState(
+                    name = "First repo",
+                    description = "first commit"
+                ),
+                UserRepositoryUiState(
+                    name = "Linux",
+                    description = "Linux kernel source tree"
+                ),
+                UserRepositoryUiState(
+                    name = "Git",
+                    description = ""
+                )
+            )
         )
     )
 }
