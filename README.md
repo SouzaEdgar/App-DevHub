@@ -12,7 +12,7 @@ Aplicativo Android desenvolvido em Kotlin utilizando Jetpack Compose para consum
   * Login
   * Bio
   * Lista de repositórios
-* Renderização dinâmica de listas com LazyColumn
+* Renderização dinâmica da lista de repositórios com LazyColumn
 
 ---
 
@@ -37,9 +37,9 @@ Aplicativo Android desenvolvido em Kotlin utilizando Jetpack Compose para consum
 * State hoisting
 * Recomposição
 * Mapper / Conversão de Models
-* Tratamento de nullable (```kotlin String?```)
+* Tratamento de nullable (`String?`)
 * Arquitetura em camadas
-* Side Effects com ```kotlin LaunchedEffect```
+* Side Effects com `LaunchedEffect`
 * Organização de projeto por responsabilidade
 
 ---
