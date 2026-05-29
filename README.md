@@ -18,7 +18,7 @@ Aplicativo Android desenvolvido em Kotlin utilizando Jetpack Compose para consum
 
 ## Tecnologias utilizadas
 
-* Kotlin
+* Kotlin<br>
 * Jetpack Compose
 * Material 3
 * Retrofit
@@ -30,17 +30,29 @@ Aplicativo Android desenvolvido em Kotlin utilizando Jetpack Compose para consum
 
 ---
 
+## Desafio dos 7 dias
+
+Dia 1 ➜ Criando uma aplicação com dados estáticos<br>
+Dia 2 ➜ Modificando o visual da exibição do app<br>
+Dia 3 ➜ Obtendo a imagem a partir de uma URL<br>
+Dia 4 ➜ Fazendo uma requisição HTTP à API do GitHub<br>
+Dia 5 ➜ Exibindo na tela as informações da API<br>
+Dia 6 ➜ Refatorando e melhorando a organização do projeto<br>
+Dia 7 ➜ Obtendo e exibindo os repositórios dos usuários<br>
+
+---
+
 ## Conceitos praticados
 
-* Consumo de API REST
-* UI declarativa com Compose
-* State hoisting
-* Recomposição
-* Mapper / Conversão de Models
-* Tratamento de nullable (`String?`)
-* Arquitetura em camadas
-* Side Effects com `LaunchedEffect`
-* Organização de projeto por responsabilidade
+► Consumo de API REST<br>
+► UI declarativa com Compose<br>
+► State hoisting<br>
+► Recomposição<br>
+► Mapper / Conversão de Models<br>
+► Tratamento de nullable (`String?`)<br>
+► Arquitetura em camadas<br>
+► Side Effects com `LaunchedEffect`<br>
+► Organização de projeto por responsabilidade<br>
 
 ---
 
