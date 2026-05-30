@@ -17,12 +17,19 @@ class UserViewModel(private val repository: GitHubWebClient): ViewModel() {
 
     fun loadUser(user: String) {
         viewModelScope.launch {
+            uiState = uiState.copy(
+                isLoading = true,
+                errorMessage = null
+            )
+
             try {
                 uiState = repository.findProfileBy(user)
             } catch (e: Exception) {
+                uiState = uiState.copy(
+                    isLoading = false,
+                    errorMessage = "Usuário não encontrado"
+                )
                 Log.d("API", "opa: $e")
-                // TODO: montar o tratamento do erro
-                //  verificar quais sao as melhores opções
             }
         }
     }

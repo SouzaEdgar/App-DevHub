@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        UserScreen("SouzaEdgar",
+                        UserScreen("Octocat",
                             viewModel = UserViewModel(
                                 GitHubWebClient()
                             )

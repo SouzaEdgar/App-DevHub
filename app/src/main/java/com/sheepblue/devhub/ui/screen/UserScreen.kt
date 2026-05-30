@@ -1,10 +1,11 @@
 package com.sheepblue.devhub.ui.screen
 
 import android.util.Log
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
-import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.components.UserProfile
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
@@ -21,10 +22,22 @@ fun UserScreen(
     }
     Log.d("API", "uiState -> $uiState")
     Log.d("API","repoLenght: ${uiState.repositories.size}")
-    UserProfile(uiState)
+
+    when {
+        uiState.isLoading -> {
+            CircularProgressIndicator()
+        }
+
+        uiState.errorMessage != null -> {
+            Text(uiState.errorMessage)
+        }
+
+        else -> {
+            UserProfile(uiState)
+        }
+    }
 }
 
-// Aplicando a conversão de objetos para testar a mudança de texto
 @Preview(showBackground = true)
 @Composable
 fun UserScreenPreview() {

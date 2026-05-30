@@ -6,5 +6,8 @@ data class UserProfileUiState(
     val name: String = "",
     val bio: String = "",
     val image: String = "",
-    val repositories: List<UserRepositoryUiState> = emptyList()
+    val repositories: List<UserRepositoryUiState> = emptyList(),
+
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
 )
