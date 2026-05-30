@@ -6,17 +6,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sheepblue.devhub.ui.components.UserProfile
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 import com.sheepblue.devhub.viewmodel.UserViewModel
+import com.sheepblue.devhub.viewmodel.UserViewModelFactory
 
 @Composable
 fun UserScreen(
     user: String,
-    viewModel: UserViewModel
+    factory: UserViewModelFactory
 ) {
+    val viewModel: UserViewModel = viewModel(factory = factory)
+
     val uiState = viewModel.uiState
+
     LaunchedEffect(user) {
         viewModel.loadUser(user)
     }

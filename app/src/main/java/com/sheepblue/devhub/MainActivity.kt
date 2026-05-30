@@ -13,12 +13,14 @@ import androidx.compose.ui.Modifier
 import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.screen.UserScreen
 import com.sheepblue.devhub.ui.theme.DevHubTheme
-import com.sheepblue.devhub.viewmodel.UserViewModel
+import com.sheepblue.devhub.viewmodel.UserViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val factory = UserViewModelFactory(GitHubWebClient())
 
         setContent {
             DevHubTheme {
@@ -28,10 +30,8 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        UserScreen("Octocat",
-                            viewModel = UserViewModel(
-                                GitHubWebClient()
-                            )
+                        UserScreen("zbxdkjbhaxkj",
+                            factory = factory
                         )
                     }
                 }
