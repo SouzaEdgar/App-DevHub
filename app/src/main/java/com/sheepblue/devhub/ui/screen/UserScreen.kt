@@ -2,11 +2,11 @@ package com.sheepblue.devhub.ui.screen
 
 import android.util.Log
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sheepblue.devhub.ui.components.UserError
 import com.sheepblue.devhub.ui.components.UserProfile
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
@@ -28,13 +28,16 @@ fun UserScreen(
     Log.d("API", "uiState -> $uiState")
     Log.d("API","repoLenght: ${uiState.repositories.size}")
 
+    // TODO: implementar outras telas
+    //  -> UserLoading (Shimmer Loading ???)
     when {
         uiState.isLoading -> {
             CircularProgressIndicator()
         }
 
         uiState.errorMessage != null -> {
-            Text(uiState.errorMessage)
+            Log.d("API", "errorMessage: ${uiState.errorMessage}")
+            UserError()
         }
 
         else -> {

@@ -29,7 +29,7 @@ class UserViewModel(private val repository: GitHubWebClient): ViewModel() {
                     isLoading = false,
                     errorMessage = "Usuário não encontrado"
                 )
-                Log.d("API", "opa: $e")
+                Log.d("API", "UserViewModel: $e")
             }
         }
     }
