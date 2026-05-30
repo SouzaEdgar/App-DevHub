@@ -8,15 +8,16 @@ import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.components.UserProfile
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
+import com.sheepblue.devhub.viewmodel.UserViewModel
 
 @Composable
 fun UserScreen(
     user: String,
-    webClient: GitHubWebClient = GitHubWebClient()
+    viewModel: UserViewModel
 ) {
-    val uiState = webClient.uiState
+    val uiState = viewModel.uiState
     LaunchedEffect(user) {
-        webClient.findProfileBy(user)
+        viewModel.loadUser(user)
     }
     Log.d("API", "uiState -> $uiState")
     Log.d("API","repoLenght: ${uiState.repositories.size}")

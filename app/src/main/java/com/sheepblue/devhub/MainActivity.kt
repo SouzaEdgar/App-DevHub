@@ -10,8 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.screen.UserScreen
 import com.sheepblue.devhub.ui.theme.DevHubTheme
+import com.sheepblue.devhub.viewmodel.UserViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,11 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        UserScreen("octocat")
+                        UserScreen("SouzaEdgar",
+                            viewModel = UserViewModel(
+                                GitHubWebClient()
+                            )
+                        )
                     }
                 }
             }

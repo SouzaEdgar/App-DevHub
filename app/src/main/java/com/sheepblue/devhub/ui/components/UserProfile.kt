@@ -34,7 +34,7 @@ fun UserProfile(userInfos: UserProfileUiState) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(140.dp)
+                    .height(160.dp)
                     .background(
                         Color.DarkGray,
                         shape = RoundedCornerShape(
@@ -50,7 +50,7 @@ fun UserProfile(userInfos: UserProfileUiState) {
                     ),
                     contentDescription = "User Avatar",
                     modifier = Modifier
-                        .size(140.dp)
+                        .size(160.dp)
                         .align(Alignment.BottomCenter)
                         .offset(y = 120.dp / 2)
                         .clip(CircleShape)
@@ -59,7 +59,7 @@ fun UserProfile(userInfos: UserProfileUiState) {
         }
 
         item {
-            Spacer(modifier = Modifier.height(140.dp / 2))
+            Spacer(modifier = Modifier.height(160.dp / 2))
         }
 
         item {
@@ -72,10 +72,15 @@ fun UserProfile(userInfos: UserProfileUiState) {
                 fontWeight = FontWeight.Bold
             )
             Text(userInfos.bio)
+            Spacer(modifier = Modifier.height(40.dp / 2))
         }
 
         items(userInfos.repositories) { repo ->
             RepositoryItem(repo)
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(100.dp / 2))
         }
     }
 }
