@@ -1,16 +1,28 @@
+# Android Studio
 *.iml
-.gradle
-/local.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-.DS_Store
+/.idea/deploymentTargetSelector.xml
+/.idea/appInsightsSettings.xml
+
+# Gradle
+.gradle
+
+# Kotlin
+.kotlin/
+
+# Local machine configuration
+local.properties
+
+# Build outputs
 /build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
-.idea/deploymentTargetSelector.xml
+
+# macOS
+.DS_Store
