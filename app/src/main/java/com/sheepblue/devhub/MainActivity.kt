@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        UserScreen("zbxdkjbhaxkj",
+                        UserScreen("SouzaEdgar",
                             factory = factory
                         )
                     }
