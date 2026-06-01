@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
+import com.sheepblue.devhub.ui.screen.SearchScreen
 import com.sheepblue.devhub.ui.screen.UserScreen
 import com.sheepblue.devhub.ui.theme.DevHubTheme
 import com.sheepblue.devhub.viewmodel.UserViewModelFactory
@@ -30,9 +31,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        UserScreen("SouzaEdgar",
-                            factory = factory
-                        )
+                        SearchScreen()
                     }
                 }
             }

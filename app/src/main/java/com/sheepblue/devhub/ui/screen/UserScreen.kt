@@ -1,7 +1,6 @@
 package com.sheepblue.devhub.ui.screen
 
 import android.util.Log
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,8 +28,6 @@ fun UserScreen(
     Log.d("API", "uiState -> $uiState")
     Log.d("API","repoLenght: ${uiState.repositories.size}")
 
-    // TODO: implementar outras telas
-    //  -> UserLoading (Shimmer Loading ???)
     when {
         uiState.isLoading -> {
             UserLoading()
