@@ -7,6 +7,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sheepblue.devhub.ui.components.UserError
+import com.sheepblue.devhub.ui.components.UserLoading
 import com.sheepblue.devhub.ui.components.UserProfile
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
@@ -32,7 +33,7 @@ fun UserScreen(
     //  -> UserLoading (Shimmer Loading ???)
     when {
         uiState.isLoading -> {
-            CircularProgressIndicator()
+            UserLoading()
         }
 
         uiState.errorMessage != null -> {
