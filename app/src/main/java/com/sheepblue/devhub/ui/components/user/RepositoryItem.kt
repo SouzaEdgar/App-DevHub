@@ -1,4 +1,4 @@
-package com.sheepblue.devhub.ui.components
+package com.sheepblue.devhub.ui.components.user
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

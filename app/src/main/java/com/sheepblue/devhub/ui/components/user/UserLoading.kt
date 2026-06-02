@@ -1,4 +1,4 @@
-package com.sheepblue.devhub.ui.components
+package com.sheepblue.devhub.ui.components.user
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.animateFloat

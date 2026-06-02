@@ -6,9 +6,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.sheepblue.devhub.ui.components.UserError
-import com.sheepblue.devhub.ui.components.UserLoading
-import com.sheepblue.devhub.ui.components.UserProfile
+import com.sheepblue.devhub.ui.components.user.UserError
+import com.sheepblue.devhub.ui.components.user.UserLoading
+import com.sheepblue.devhub.ui.components.user.UserProfile
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 import com.sheepblue.devhub.viewmodel.UserViewModel

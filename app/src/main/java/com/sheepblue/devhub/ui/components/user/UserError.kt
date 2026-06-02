@@ -1,4 +1,4 @@
-package com.sheepblue.devhub.ui.components
+package com.sheepblue.devhub.ui.components.user
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sheepblue.devhub.R
+import com.sheepblue.devhub.ui.components.common.BackButton
 
 @Composable
 fun UserError(onClick: () -> Unit) {
@@ -46,23 +45,11 @@ fun UserError(onClick: () -> Unit) {
                     )
                 )
         ) {
-            Button(
-                onClick = { onClick() },
+            BackButton(
                 modifier = Modifier
-                    .size(80.dp)
-                    .padding(top = 3.dp, start = 1.dp)
-                    .align(Alignment.TopStart),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = MaterialTheme.colorScheme.background
-                )
-            ) {
-                Text(
-                    text = "<",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 50.sp
-                )
-            }
+                    .padding(top = 15.dp, start = 12.dp)
+                    .size(32.dp)
+            ){ onClick() }
             Box(
                 modifier = Modifier
                     .size(160.dp)

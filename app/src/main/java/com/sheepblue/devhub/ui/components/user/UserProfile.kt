@@ -1,4 +1,4 @@
-package com.sheepblue.devhub.ui.components
+package com.sheepblue.devhub.ui.components.user
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,9 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.sheepblue.devhub.R
+import com.sheepblue.devhub.ui.components.common.BackButton
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 
@@ -61,23 +59,11 @@ fun UserProfile(userInfos: UserProfileUiState, onClick: () -> Unit) {
                         .offset(y = 120.dp / 2)
                         .clip(CircleShape)
                 )
-                Button(
-                    onClick = { onClick() },
+                BackButton(
                     modifier = Modifier
-                        .size(80.dp)
-                        .padding(top = 3.dp, start = 1.dp)
-                        .align(Alignment.TopStart),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = MaterialTheme.colorScheme.background
-                    )
-                    ) {
-                    Text(
-                        text = "<",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 50.sp
-                    )
-                }
+                        .padding(top = 15.dp, start = 12.dp)
+                        .size(32.dp)
+                ){ onClick() }
             }
         }
 
