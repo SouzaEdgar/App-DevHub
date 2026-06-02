@@ -6,11 +6,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.sheepblue.devhub.ui.components.search.SearchTextField
+import com.sheepblue.devhub.viewmodel.SelectedUserViewModel
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(navController: NavController, viewModel: SelectedUserViewModel) {
     var userName by remember { mutableStateOf("") }
 
     SearchTextField(
@@ -18,13 +19,19 @@ fun SearchScreen() {
         onTextChange = {
             userName = it
             Log.d("Search", "Buscou: $userName")
+        },
+        onClick = {
+            viewModel.settSearchUser(search = userName)
+            navController.navigate(route = "User_Screen")
+            Log.d("Search", "usuario encontrado: ${viewModel.searchUser}")
         }
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SearchScreenPreview() {
-    SearchScreen()
-}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun SearchScreenPreview() {
+//    SearchScreen()
+//}
 

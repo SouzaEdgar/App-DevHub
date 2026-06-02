@@ -10,55 +10,54 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Composable
-fun SearchTextField(
-    text: String,
-    onTextChange: (String) -> Unit
-) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(15.dp),
-        verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally
+    @Composable
+    fun SearchTextField(
+        text: String,
+        onTextChange: (String) -> Unit,
+        onClick: () -> Unit
     ) {
-        OutlinedTextField(
-            value = text,
-            onValueChange = onTextChange,
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(15.dp),
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            OutlinedTextField(
+                value = text,
+                onValueChange = onTextChange,
 
-            label = {
-                Text("Github User")
-            },
+                label = {
+                    Text("Github User")
+                },
 
-            placeholder = {
-                Text("Digite um usuário")
-            },
+                placeholder = {
+                    Text("Digite um usuário")
+                },
 
-            singleLine = true,
+                singleLine = true,
 
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(40.dp))
-        SearchButton() { run {} }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SearchScreenPreview() {
-    var userName by remember { mutableStateOf("") }
-    SearchTextField(
-        text = userName,
-        onTextChange = {
-            userName = it
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(40.dp))
+            SearchButton() { run {
+                onClick()
+            } }
         }
-    )
-}
+    }
+
+    //@Preview(showBackground = true)
+    //@Composable
+    //fun SearchScreenPreview() {
+    //    var userName by remember { mutableStateOf("") }
+    //    SearchTextField(
+    //        text = userName,
+    //        onTextChange = {
+    //            userName = it
+    //        },
+    //        navController =
+    //    )
+    //}

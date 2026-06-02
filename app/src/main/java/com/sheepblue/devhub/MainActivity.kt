@@ -10,10 +10,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.screen.SearchScreen
 import com.sheepblue.devhub.ui.screen.UserScreen
 import com.sheepblue.devhub.ui.theme.DevHubTheme
+import com.sheepblue.devhub.viewmodel.SelectedUserViewModel
+import com.sheepblue.devhub.viewmodel.SelectedUserViewModelFactory
 import com.sheepblue.devhub.viewmodel.UserViewModelFactory
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +27,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val factory = UserViewModelFactory(GitHubWebClient())
+        val factoryUser = UserViewModelFactory(GitHubWebClient())
+        val factorySelected = SelectedUserViewModelFactory()
 
         setContent {
             DevHubTheme {
@@ -31,7 +38,20 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        SearchScreen()
+                        val selectedUserViewModel: SelectedUserViewModel = viewModel(factory = factorySelected)
+
+                        val navController = rememberNavController()
+                        NavHost(navController = navController, startDestination = "Search_Screen", builder = {
+                            composable("Search_Screen") {
+                                SearchScreen(
+                                    navController = navController,
+                                    viewModel = selectedUserViewModel
+                                )
+                            }
+                            composable("User_Screen") {
+                                UserScreen(user = selectedUserViewModel.searchUser, factory = factoryUser)
+                            }
+                        })
                     }
                 }
             }
