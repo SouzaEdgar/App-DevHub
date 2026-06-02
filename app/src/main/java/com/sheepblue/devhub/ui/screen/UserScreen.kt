@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.sheepblue.devhub.ui.components.UserError
 import com.sheepblue.devhub.ui.components.UserLoading
 import com.sheepblue.devhub.ui.components.UserProfile
@@ -16,7 +17,8 @@ import com.sheepblue.devhub.viewmodel.UserViewModelFactory
 @Composable
 fun UserScreen(
     user: String,
-    factory: UserViewModelFactory
+    factory: UserViewModelFactory,
+    navController: NavController
 ) {
     val viewModel: UserViewModel = viewModel(factory = factory)
 
@@ -35,11 +37,15 @@ fun UserScreen(
 
         uiState.errorMessage != null -> {
             Log.d("API", "errorMessage: ${uiState.errorMessage}")
-            UserError()
+            UserError(onClick = {
+                navController.navigate("Search_Screen")
+            })
         }
 
         else -> {
-            UserProfile(uiState)
+            UserProfile(userInfos = uiState, onClick = {
+                navController.navigate("Search_Screen")
+            })
         }
     }
 }
@@ -67,6 +73,7 @@ fun UserScreenPreview() {
                     description = ""
                 )
             )
-        )
+        ),
+        onClick = {}
     )
 }

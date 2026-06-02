@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.sheepblue.devhub.R
 
 @Composable
-fun UserError() {
+fun UserError(onClick: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -43,6 +46,23 @@ fun UserError() {
                     )
                 )
         ) {
+            Button(
+                onClick = { onClick() },
+                modifier = Modifier
+                    .size(80.dp)
+                    .padding(top = 3.dp, start = 1.dp)
+                    .align(Alignment.TopStart),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = MaterialTheme.colorScheme.background
+                )
+            ) {
+                Text(
+                    text = "<",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 50.sp
+                )
+            }
             Box(
                 modifier = Modifier
                     .size(160.dp)
@@ -76,5 +96,5 @@ fun UserError() {
 @Preview(showBackground = true)
 @Composable
 fun UserErrorPreview() {
-    UserError()
+    UserError(onClick = {})
 }

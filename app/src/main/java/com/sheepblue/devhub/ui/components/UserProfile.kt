@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,14 +23,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.sheepblue.devhub.R
 import com.sheepblue.devhub.ui.state.UserProfileUiState
+import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 
 @Composable
-fun UserProfile(userInfos: UserProfileUiState) {
+fun UserProfile(userInfos: UserProfileUiState, onClick: () -> Unit) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -55,6 +61,23 @@ fun UserProfile(userInfos: UserProfileUiState) {
                         .offset(y = 120.dp / 2)
                         .clip(CircleShape)
                 )
+                Button(
+                    onClick = { onClick() },
+                    modifier = Modifier
+                        .size(80.dp)
+                        .padding(top = 3.dp, start = 1.dp)
+                        .align(Alignment.TopStart),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = MaterialTheme.colorScheme.background
+                    )
+                    ) {
+                    Text(
+                        text = "<",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 50.sp
+                    )
+                }
             }
         }
 
@@ -83,4 +106,32 @@ fun UserProfile(userInfos: UserProfileUiState) {
             Spacer(modifier = Modifier.height(100.dp / 2))
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun UserScreenPreview() {
+    UserProfile(
+        userInfos = UserProfileUiState(
+            login = "torvalds",
+            name = "Linus Torvalds",
+            bio = "~ sem bio ~",
+            image = "https://avatars.githubusercontent.com/u/1024025?v=4",
+            repositories = listOf(
+                UserRepositoryUiState(
+                    name = "First repo",
+                    description = "first commit"
+                ),
+                UserRepositoryUiState(
+                    name = "Linux",
+                    description = "Linux kernel source tree"
+                ),
+                UserRepositoryUiState(
+                    name = "Git",
+                    description = ""
+                )
+            )
+        ),
+        onClick = {}
+    )
 }

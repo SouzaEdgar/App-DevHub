@@ -49,7 +49,10 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable("User_Screen") {
-                                UserScreen(user = selectedUserViewModel.searchUser, factory = factoryUser)
+                                UserScreen(
+                                    user = selectedUserViewModel.searchUser,
+                                    factory = factoryUser,
+                                    navController = navController)
                             }
                         })
                     }
