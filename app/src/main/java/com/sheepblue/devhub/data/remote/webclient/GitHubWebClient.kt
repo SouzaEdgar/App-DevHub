@@ -1,5 +1,6 @@
 package com.sheepblue.devhub.data.remote.webclient
 
+import android.util.Log
 import com.sheepblue.devhub.data.RetrofitInitializer
 import com.sheepblue.devhub.data.remote.service.GitHubService
 import com.sheepblue.devhub.ui.state.UserProfileUiState
@@ -9,21 +10,29 @@ class GitHubWebClient (private val service: GitHubService = RetrofitInitializer(
 
     suspend fun findProfileBy(user: String): UserProfileUiState {
         val profileResponse = service.findProfileBy(user)
+        val profileResponseBody = profileResponse.body()
 
         val reposResponse = service.findRepositoryBy(user)
 
+        Log.d("DEBUG", "profileResponse: ${profileResponse.headers()}\nreposResponse: $reposResponse")
+
         // retorna com a conversao ja feita (mapper)
         return UserProfileUiState(
-            login = profileResponse.login,
-            name = profileResponse.name?: "~ sem nome ~",
-            bio = profileResponse.bio?: "~ sem bio ~",
-            image = profileResponse.avatar_url?: "",
+            login = profileResponseBody?.login ?: "",
+            name = profileResponseBody?.name?: "~ sem nome ~",
+            bio = profileResponseBody?.bio?: "~ sem bio ~",
+            image = profileResponseBody?.avatar_url?: "",
             repositories = reposResponse.map { repo ->
                 UserRepositoryUiState(
                     name = repo.name?: "",
                     description = repo.description?: ""
                 )
             }
+//            login = "login_teste",
+//            name = "name_teste",
+//            bio = "bio_teste",
+//            image = "",
+//            repositories = emptyList()
         )
     }
 }
