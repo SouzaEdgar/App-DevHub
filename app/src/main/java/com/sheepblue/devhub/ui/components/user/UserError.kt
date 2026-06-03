@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,11 +44,7 @@ fun UserError(onClick: () -> Unit) {
                     )
                 )
         ) {
-            BackButton(
-                modifier = Modifier
-                    .padding(top = 15.dp, start = 12.dp)
-                    .size(32.dp)
-            ){ onClick() }
+            BackButton{ onClick() }
             Box(
                 modifier = Modifier
                     .size(160.dp)

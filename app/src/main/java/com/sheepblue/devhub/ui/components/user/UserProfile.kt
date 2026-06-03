@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -59,11 +58,7 @@ fun UserProfile(userInfos: UserProfileUiState, onClick: () -> Unit) {
                         .offset(y = 120.dp / 2)
                         .clip(CircleShape)
                 )
-                BackButton(
-                    modifier = Modifier
-                        .padding(top = 15.dp, start = 12.dp)
-                        .size(32.dp)
-                ){ onClick() }
+                BackButton{ onClick() }
             }
         }
 
