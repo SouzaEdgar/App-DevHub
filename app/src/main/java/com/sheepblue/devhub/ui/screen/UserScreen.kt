@@ -38,13 +38,13 @@ fun UserScreen(
         uiState.errorMessage != null -> {
             Log.d("API", "errorMessage: ${uiState.errorMessage}")
             UserError(onClick = {
-                navController.navigate("Search_Screen")
+                navController.popBackStack()
             })
         }
 
         else -> {
             UserProfile(userInfos = uiState, onClick = {
-                navController.navigate("Search_Screen")
+                navController.popBackStack()
             })
         }
     }
