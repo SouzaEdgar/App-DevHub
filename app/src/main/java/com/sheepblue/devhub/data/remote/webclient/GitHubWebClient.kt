@@ -11,10 +11,11 @@ class GitHubWebClient (private val service: GitHubService = RetrofitInitializer(
     suspend fun findProfileBy(user: String): UserProfileUiState {
         val profileResponse = service.findProfileBy(user)
         val profileResponseBody = profileResponse.body()
+        val profileResponseHeader = profileResponse.headers()
 
         val reposResponse = service.findRepositoryBy(user)
 
-        Log.d("DEBUG", "profileResponse: ${profileResponse.headers()}\nreposResponse: $reposResponse")
+        Log.d("DEBUG", "Restantes: ${profileResponseHeader.get("x-ratelimit-remaining")}\n+1 em: ${profileResponseHeader["x-ratelimit-reset"]}\nreposResponse: $reposResponse")
 
         // retorna com a conversao ja feita (mapper)
         return UserProfileUiState(
