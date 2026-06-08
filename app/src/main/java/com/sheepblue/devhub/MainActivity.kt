@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.screen.SearchScreen
+import com.sheepblue.devhub.ui.screen.SettingsScreen
 import com.sheepblue.devhub.ui.screen.UserScreen
 import com.sheepblue.devhub.ui.theme.DevHubTheme
 import com.sheepblue.devhub.viewmodel.SelectedUserViewModel
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
                         NavHost(navController = navController, startDestination = "Search_Screen", builder = {
                             composable("Search_Screen") {
                                 SearchScreen(
-                                    navController = navController,
+                                    onSearchClick = { navController.navigate(route = "User_Screen") },
                                     viewModel = selectedUserViewModel
                                 )
                             }
@@ -52,7 +53,13 @@ class MainActivity : ComponentActivity() {
                                 UserScreen(
                                     user = selectedUserViewModel.searchUser,
                                     factory = factoryUser,
-                                    navController = navController)
+                                    onBackClick = { navController.popBackStack() }
+                                )
+                            }
+                            composable("Settings_Screen") {
+                                SettingsScreen(
+                                    onBackClick = { navController.popBackStack() }
+                                )
                             }
                         })
                     }

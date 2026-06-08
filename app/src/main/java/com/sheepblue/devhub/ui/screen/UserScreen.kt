@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.sheepblue.devhub.ui.components.user.UserError
 import com.sheepblue.devhub.ui.components.user.UserLoading
 import com.sheepblue.devhub.ui.components.user.UserProfile
@@ -18,7 +17,7 @@ import com.sheepblue.devhub.viewmodel.UserViewModelFactory
 fun UserScreen(
     user: String,
     factory: UserViewModelFactory,
-    navController: NavController
+    onBackClick: () -> Unit
 ) {
     val viewModel: UserViewModel = viewModel(factory = factory)
 
@@ -38,13 +37,13 @@ fun UserScreen(
         uiState.errorMessage != null -> {
             Log.d("API", "errorMessage: ${uiState.errorMessage}")
             UserError(onClick = {
-                navController.popBackStack()
+                onBackClick()
             })
         }
 
         else -> {
             UserProfile(userInfos = uiState, onClick = {
-                navController.popBackStack()
+                onBackClick()
             })
         }
     }
