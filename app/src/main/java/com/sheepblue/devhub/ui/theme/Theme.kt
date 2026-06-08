@@ -8,18 +8,41 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Color(0xFF2F81F7),          // azul do GitHub
+    onPrimary = Color(0xFFFFFFFF),
+
+    secondary = Color(0xFF8B949E),        // cinza secundario
+    onSecondary = Color(0xFFFFFFFF),
+
+    tertiary = Color(0xFF3FB950),         // verde do GitHub
+    onTertiary = Color(0xFF000000),
+
+    background = Color(0xFF0D1117),       // fundo principal
+    onBackground = Color(0xFFE6EDF3),     // texto principal
+
+    surface = Color(0xFF161B22),          // cards e tambem containers
+    onSurface = Color(0xFFE6EDF3)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Color(0xFF0969DA),          // azul do GitHub
+    onPrimary = Color(0xFFFFFFFF),
+
+    secondary = Color(0xFF57606A),        // cinza secundario
+    onSecondary = Color(0xFFFFFFFF),
+
+    tertiary = Color(0xFF1A7F37),         // verde do GitHub
+    onTertiary = Color(0xFFFFFFFF),
+
+    background = Color(0xFFFFFFFF),       // fundo branco
+    onBackground = Color(0xFF1F2328),     // texto principal
+
+    surface = Color(0xFFF6F8FA),          // cards e etc
+    onSurface = Color(0xFF1F2328)
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -36,7 +59,7 @@ private val LightColorScheme = lightColorScheme(
 fun DevHubTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

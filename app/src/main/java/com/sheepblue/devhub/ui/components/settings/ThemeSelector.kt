@@ -38,12 +38,12 @@ fun ThemeSelector(checked: Boolean, onCheck: (Boolean) -> Unit) {
 
             checked = checked,
             onCheckedChange = { onCheck(it) },
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.primaryContainer,
-                checkedTrackColor = MaterialTheme.colorScheme.primary,
-                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer
-            ),
+//            colors = SwitchDefaults.colors(
+//                checkedThumbColor = MaterialTheme.colorScheme.primaryContainer,
+//                checkedTrackColor = MaterialTheme.colorScheme.primary,
+//                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+//                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer
+//            ),
             thumbContent = if (checked) {
                 {
                     Icon(
