@@ -14,50 +14,50 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-    @Composable
-    fun SearchTextField(
-        text: String,
-        onTextChange: (String) -> Unit,
-        onClick: () -> Unit
+@Composable
+fun SearchTextField(
+    text: String,
+    onTextChange: (String) -> Unit,
+    onClick: () -> Unit
+) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(15.dp),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(15.dp),
-            verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            OutlinedTextField(
-                value = text,
-                onValueChange = onTextChange,
+        OutlinedTextField(
+            value = text,
+            onValueChange = onTextChange,
 
-                label = {
-                    Text("Github User")
-                },
+            label = {
+                Text("Github User")
+            },
 
-                placeholder = {
-                    Text("Digite um usuário")
-                },
+            placeholder = {
+                Text("Digite um usuário")
+            },
 
-                singleLine = true,
+            singleLine = true,
 
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(40.dp))
-            SearchButton() { run {
-                onClick()
-            } }
-        }
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(40.dp))
+        SearchButton() { run {
+            onClick()
+        } }
     }
+}
 
-    //@Preview(showBackground = true)
-    //@Composable
-    //fun SearchScreenPreview() {
-    //    var userName by remember { mutableStateOf("") }
-    //    SearchTextField(
-    //        text = userName,
-    //        onTextChange = {
-    //            userName = it
-    //        },
-    //        navController =
-    //    )
-    //}
+//@Preview(showBackground = true)
+//@Composable
+//fun SearchScreenPreview() {
+//    var userName by remember { mutableStateOf("") }
+//    SearchTextField(
+//        text = userName,
+//        onTextChange = {
+//            userName = it
+//        },
+//        navController =
+//    )
+//}

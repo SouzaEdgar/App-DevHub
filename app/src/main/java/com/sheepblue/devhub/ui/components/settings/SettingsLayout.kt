@@ -45,7 +45,7 @@ fun SettingsLayoutDarkPreview() {
         ) {
             SettingsLayout(
                 onBackClick = {},
-                checked = false,
+                checked = true,
                 onCheck = {}
             )
 

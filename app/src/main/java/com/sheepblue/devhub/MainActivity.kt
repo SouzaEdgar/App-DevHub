@@ -46,6 +46,7 @@ class MainActivity : ComponentActivity() {
                             composable("Search_Screen") {
                                 SearchScreen(
                                     onSearchClick = { navController.navigate(route = "User_Screen") },
+                                    onSettingsClick = { navController.navigate(route = "Settings_Screen") },
                                     viewModel = selectedUserViewModel
                                 )
                             }
