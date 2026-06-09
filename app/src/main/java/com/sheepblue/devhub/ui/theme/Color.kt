@@ -2,14 +2,28 @@ package com.sheepblue.devhub.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val White = Color(0xFFFFFFFF)
+val Black = Color(0xFF000000)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val PrimaryDark = Color(0xFF2F81F7)
+val PrimaryLight = Color(0xFF0969DA)
 
-val Dark01 = Color(0xFF24292E)
-val Dark02 = Color(0xFF2b3137)
-val Dark03 = Color(0xFF2dba4e)
+val SecondaryDark = Color(0xFF8B949E)
+val SecondaryLight = Color(0xFF57606A)
+
+val TertiaryDark = Color(0xFF3FB950)
+val TertiaryLight = Color(0xFF1A7F37)
+
+val BackgroundDark = Color(0xFF0D1117)
+val BackgroundLight = Color(0xFFFFFFFF)
+
+// cor do texto principal
+val OnBackgroundDark = Color(0xFFE6EDF3)
+val OnBackGroundLight = Color(0xFF1F2328)
+
+// cards e containers
+val SurfaceDark = Color(0xFF161B22)
+val SurfaceLight = Color(0xFFF6F8FA)
+
+val OnSurfaceDark = Color(0xFFE6EDF3)
+val OnSurfaceLight = Color(0xFF1F2328)
