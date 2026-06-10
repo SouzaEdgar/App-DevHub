@@ -22,8 +22,7 @@ import com.sheepblue.devhub.ui.theme.DevHubTheme
 fun EnterSettingsButton(onClick: () -> Unit) {
         Box(
             modifier = Modifier
-                .padding(top = 15.dp, start = 12.dp)
-                .size(58.dp)
+                .padding(top = 15.dp, end = 15.dp)
                 .clip(CircleShape)
                 .clickable(enabled = true, onClick = onClick)
         ) {
@@ -32,7 +31,7 @@ fun EnterSettingsButton(onClick: () -> Unit) {
                 contentDescription = "Botão de opções",
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
-                    .size(size = 40.dp)
+                    .size(size = 50.dp)
                     .align(alignment = Alignment.Center)
             )
         }

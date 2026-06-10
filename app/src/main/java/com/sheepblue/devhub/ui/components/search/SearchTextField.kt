@@ -22,7 +22,7 @@ fun SearchTextField(
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(15.dp),
+        .padding(all = 15.dp),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

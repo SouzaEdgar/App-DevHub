@@ -66,7 +66,7 @@ fun UserLoading() {
         Box( // Background
             modifier = Modifier
                 .fillMaxWidth()
-                .height(160.dp)
+                .height(150.dp)
                 .background(
                     Color.DarkGray,
                     shape = RoundedCornerShape(

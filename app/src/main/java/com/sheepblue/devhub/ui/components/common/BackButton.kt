@@ -1,8 +1,6 @@
 package com.sheepblue.devhub.ui.components.common
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,13 +26,12 @@ fun BackButton(onClick: () -> Unit) {
             .padding(top = 15.dp, start = 12.dp)
             .size(58.dp)
             .clip(CircleShape)
-            .border(border = BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.background), shape = CircleShape)
             .clickable(enabled = true, onClick = onClick)
     ) {
         Icon(
             painter = painterResource(R.drawable.outline_arrow_back_24),
             contentDescription = "Botão de voltar",
-            tint = MaterialTheme.colorScheme.background,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .size(size = 40.dp)
                 .align(alignment = Alignment.Center)

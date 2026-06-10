@@ -2,6 +2,7 @@ package com.sheepblue.devhub.ui.components.user
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,32 +27,75 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sheepblue.devhub.R
 import com.sheepblue.devhub.ui.components.common.BackButton
+import com.sheepblue.devhub.ui.theme.SurfaceHeaderDark
+import com.sheepblue.devhub.ui.theme.SurfaceHeaderLight
 
 @Composable
 fun UserError(onClick: () -> Unit) {
+    val avatarSize = 160.dp
+    val avatarOffset = avatarSize / 2.5f
+
+    val headerBackground =
+        if(isSystemInDarkTheme()) {
+            SurfaceHeaderDark
+        }
+        else {
+            SurfaceHeaderLight
+        }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(160.dp)
+                .height(150.dp)
                 .background(
-                    Color.DarkGray,
+                    color = MaterialTheme.colorScheme.error,
                     shape = RoundedCornerShape(
                         bottomStart = 22.dp,
                         bottomEnd = 22.dp
                     )
                 )
         ) {
-            BackButton{ onClick() }
+            // Background do avatar
             Box(
                 modifier = Modifier
-                    .size(160.dp)
+                    .fillMaxWidth()
+                    .height(140.dp)
+                    .background(
+                        color = headerBackground,
+                        shape = RoundedCornerShape(
+                            bottomStart = 22.dp,
+                            bottomEnd = 22.dp
+                        )
+                    )
+            )
+            // Contorno do avatar
+            Box(
+                modifier = Modifier
+                    .size(size = avatarSize - 20.dp)
+                    .offset(y = avatarOffset - 5.dp)
                     .align(Alignment.BottomCenter)
-                    .offset(y = 120.dp / 2)
-                    .background(MaterialTheme.colorScheme.background, shape = CircleShape)
                     .clip(CircleShape)
+                    .background(color = MaterialTheme.colorScheme.error)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .offset(y = 60.dp)
+                    .align(Alignment.BottomCenter)
+                    .background(color = MaterialTheme.colorScheme.background)
+            )
+            // auxilio para deixar fundo do avatar como background (cor)
+            Box(
+                modifier = Modifier
+                    .size(size = 80.dp)
+                    .offset(y = avatarOffset - 50.dp)
+                    .align(Alignment.BottomCenter)
+                    .clip(CircleShape)
+                    .background(color = MaterialTheme.colorScheme.background)
             )
             Image(
                 painter = painterResource(
@@ -60,11 +104,12 @@ fun UserError(onClick: () -> Unit) {
                 contentDescription = "User Avatar",
                 colorFilter = ColorFilter.tint(Color.DarkGray),
                 modifier = Modifier
-                    .size(160.dp)
+                    .size(size = avatarSize)
                     .align(Alignment.BottomCenter)
-                    .offset(y = 120.dp / 2)
+                    .offset(y = avatarOffset)
                     .clip(CircleShape)
             )
+            BackButton{ onClick() }
         }
         Spacer(modifier = Modifier.height(180.dp / 2))
         Text(
