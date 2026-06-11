@@ -1,21 +1,20 @@
 package com.sheepblue.devhub.ui.screen
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.sheepblue.devhub.ui.components.settings.SettingsLayout
+import com.sheepblue.devhub.viewmodel.SettingsViewModel
 
 @Composable
-fun SettingsScreen(onBackClick: () -> Unit) {
-    var checked by remember { mutableStateOf(true) }
+fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel) {
+    val isDarkMode by viewModel.isDarkMode.collectAsState(initial = false)
 
     SettingsLayout(
         onBackClick = { onBackClick() },
-        checked = checked,
-        onCheck = { checked = it }
+        checked = isDarkMode,
+        onCheck = { viewModel.updateDarkMode(enabled = it) }
     )
 }
 
@@ -23,5 +22,9 @@ fun SettingsScreen(onBackClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun SettingsScreenPreview() {
-    SettingsScreen(onBackClick = {})
+    SettingsLayout(
+        onBackClick = { },
+        checked = true,
+        onCheck = { }
+    )
 }
