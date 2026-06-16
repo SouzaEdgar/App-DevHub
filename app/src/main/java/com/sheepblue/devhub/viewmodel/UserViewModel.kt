@@ -11,7 +11,7 @@ import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 import kotlinx.coroutines.launch
 
-class UserViewModel(private val repository: GitHubWebClient): ViewModel() {
+class UserViewModel(private val webClient: GitHubWebClient): ViewModel() {
     // Deixar a responsabilidade de trocar o state no viewMoedl
     var uiState by mutableStateOf(UserProfileUiState())
         private set
@@ -23,27 +23,28 @@ class UserViewModel(private val repository: GitHubWebClient): ViewModel() {
                 errorMessage = null
             )
 
+            // TODO: Ajustar UserViewModel para utilizar a entrega de WebClient => GitHubResponse
+            //    >> UserViewModel chama WebClient que entrega GitHubResponse
+            //    >> pega esse response e usa os valores, mandando eles para UiState
+            //    >> utiliza os valores tbm para ResponseRepository.setResponse(valores)
             try {
                 //uiState = repository.findProfileBy(user)
-                uiState = repository.findProfileBy(user = user).profile
-            // montar a uistate com os valores de profile
-                // retorna com a conversao ja feita (mapper)
-//                return UserProfileUiState(
-//                    login = profileResponseBody?.login ?: "",
-//                    name = profileResponseBody?.name?: "~ sem nome ~",
-//                    bio = profileResponseBody?.bio?: "~ sem bio ~",
-//                    image = profileResponseBody?.avatar_url?: "",
-//                    repositories = reposResponse.map { repo ->
+//                ResponseRepository.settResponse(webClient.findProfileBy(user = user))
+//                val profileInfo = ResponseRepository.gettResponse()
+//                val user = profileInfo.profile
+//                val repos = profileInfo.repos
+//
+//                uiState = UserProfileUiState(
+//                    login = user.login,
+//                    name = user.name,
+//                    bio = user.bio,
+//                    image = user,
+//                    repositories = repos.map { repo ->
 //                        UserRepositoryUiState(
 //                            name = repo.name?: "",
 //                            description = repo.description?: ""
 //                        )
 //                    }
-////            login = "login_teste",
-////            name = "name_teste",
-////            bio = "bio_teste",
-////            image = "",
-////            repositories = emptyList()
 //                )
             } catch (e: Exception) {
                 uiState = uiState.copy(

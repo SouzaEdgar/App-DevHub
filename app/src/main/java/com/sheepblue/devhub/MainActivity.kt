@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // TODO: Injetar a dependecia de ResponseRepositoru nas facotries de User e Settings
         val factoryUser = UserViewModelFactory(repository = GitHubWebClient())
         val factorySelected = SelectedUserViewModelFactory()
         val factorySettings = SettingsViewModelFactory(dataStore = SettingsDataStore(applicationContext.dataStore))

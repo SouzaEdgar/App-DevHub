@@ -11,6 +11,7 @@ import com.sheepblue.devhub.viewmodel.SettingsViewModel
 fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel) {
     val isDarkMode by viewModel.isDarkMode.collectAsState(initial = false)
 
+    // TODO: Preparar tela Settings para obter informações de rate-limit
     SettingsLayout(
         onBackClick = { onBackClick() },
         checked = isDarkMode,
