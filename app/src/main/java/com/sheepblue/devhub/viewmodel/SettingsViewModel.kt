@@ -14,6 +14,7 @@ class SettingsViewModel(
     // TODO: Receber GitHubResponse do GitHubResponseRepository para trabalhar com a info do rate-limit
     //  nova preocupação: após a mudanças nos valores da ResponseRepository, como settings vai saber?
     //  montar algum mecanismo observavel stateflow, mutablestateflow da vida
+    val rateLimit = response.myResponse
 
     fun updateDarkMode(enabled: Boolean) {
         viewModelScope.launch {

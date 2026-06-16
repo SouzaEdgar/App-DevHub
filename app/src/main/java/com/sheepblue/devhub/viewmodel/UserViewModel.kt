@@ -17,7 +17,7 @@ class UserViewModel(
     private val response: GitHubResponseRepository
 ): ViewModel() {
     // Deixar a responsabilidade de trocar o state no viewMoedl
-    var uiState by mutableStateOf(UserProfileUiState())
+    var uiState by mutableStateOf(value = UserProfileUiState())
         private set
 
     fun loadUser(user: String) {
@@ -27,29 +27,27 @@ class UserViewModel(
                 errorMessage = null
             )
 
-            // TODO: Ajustar UserViewModel para utilizar a entrega de WebClient => GitHubResponse
-            //    >> UserViewModel chama WebClient que entrega GitHubResponse
-            //    >> pega esse response e usa os valores, mandando eles para UiState
-            //    >> utiliza os valores tbm para ResponseRepository.setResponse(valores)
             try {
-                //uiState = repository.findProfileBy(user)
-//                ResponseRepository.settResponse(webClient.findProfileBy(user = user))
-//                val profileInfo = ResponseRepository.gettResponse()
-//                val user = profileInfo.profile
-//                val repos = profileInfo.repos
-//
-//                uiState = UserProfileUiState(
-//                    login = user.login,
-//                    name = user.name,
-//                    bio = user.bio,
-//                    image = user,
-//                    repositories = repos.map { repo ->
-//                        UserRepositoryUiState(
-//                            name = repo.name?: "",
-//                            description = repo.description?: ""
-//                        )
-//                    }
-//                )
+                val myClient = webClient.findProfileBy(user = user)
+                response.updateResponse(response = myClient) // atualizar os dados da ResponseRepository
+
+                val myProfile = myClient.profile
+                val myRepositories = myClient.repositories
+
+                uiState = uiState.copy(
+                    login = myProfile.login,
+                    name = myProfile.name?: "",
+                    bio = myProfile.bio?: "",
+                    image = myProfile.avatar_url?: "",
+                    repositories = myRepositories.map { repo ->
+                        UserRepositoryUiState(
+                            name = repo.name?: "",
+                            description = repo.description?: ""
+                        )
+                    },
+                    isLoading = false,
+                    errorMessage = null
+                )
             } catch (e: Exception) {
                 uiState = uiState.copy(
                     isLoading = false,

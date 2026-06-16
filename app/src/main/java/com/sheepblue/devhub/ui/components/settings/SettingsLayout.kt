@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,7 +14,11 @@ import com.sheepblue.devhub.ui.components.common.BackButton
 import com.sheepblue.devhub.ui.theme.DevHubTheme
 
 @Composable
-fun SettingsLayout(onBackClick: () -> Unit, checked: Boolean, onCheck: (Boolean) -> Unit) {
+fun SettingsLayout(
+    onBackClick: () -> Unit,
+    checked: Boolean,
+    onCheck: (Boolean) -> Unit
+) {
     Column() {
         BackButton { onBackClick() }
         Row(
