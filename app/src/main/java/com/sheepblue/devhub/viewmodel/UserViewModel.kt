@@ -6,12 +6,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sheepblue.devhub.data.remote.GitHubResponseRepository
 import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 import kotlinx.coroutines.launch
 
-class UserViewModel(private val webClient: GitHubWebClient): ViewModel() {
+class UserViewModel(
+    private val webClient: GitHubWebClient,
+    private val response: GitHubResponseRepository
+): ViewModel() {
     // Deixar a responsabilidade de trocar o state no viewMoedl
     var uiState by mutableStateOf(UserProfileUiState())
         private set

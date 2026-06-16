@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sheepblue.devhub.data.local.datastore.SettingsDataStore
+import com.sheepblue.devhub.data.remote.GitHubResponseRepository
 import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.screen.SearchScreen
 import com.sheepblue.devhub.ui.screen.SettingsScreen
@@ -40,9 +41,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         // TODO: Injetar a dependecia de ResponseRepositoru nas facotries de User e Settings
-        val factoryUser = UserViewModelFactory(repository = GitHubWebClient())
+        val currentResponseRepository = GitHubResponseRepository()
+
+        val factoryUser = UserViewModelFactory(repository = GitHubWebClient(), response = currentResponseRepository)
         val factorySelected = SelectedUserViewModelFactory()
-        val factorySettings = SettingsViewModelFactory(dataStore = SettingsDataStore(applicationContext.dataStore))
+        val factorySettings = SettingsViewModelFactory(dataStore = SettingsDataStore(applicationContext.dataStore), response = currentResponseRepository)
 
         setContent {
             val selectedUserViewModel: SelectedUserViewModel = viewModel(factory = factorySelected)
