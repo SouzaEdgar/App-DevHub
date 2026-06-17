@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sheepblue.devhub.data.local.datastore.SettingsDataStore
 import com.sheepblue.devhub.data.remote.GitHubResponseRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -11,10 +14,10 @@ class SettingsViewModel(
     private val response: GitHubResponseRepository
 ): ViewModel() {
     var isDarkMode = settingsDataStore.isDarkMode
-    // TODO: Receber GitHubResponse do GitHubResponseRepository para trabalhar com a info do rate-limit
-    //  nova preocupação: após a mudanças nos valores da ResponseRepository, como settings vai saber?
-    //  montar algum mecanismo observavel stateflow, mutablestateflow da vida
-    val rateLimit = response.myResponse
+    // TODO: (1°) preparar rateLimit para OBSERVAR o valor de .value?.rateLimit ao inves de apenas ler
+    //     algo como StateFlow<GitHubResponse?>, Flow<...> (
+    val rateLimit = response.currentResponse.value?.rateLimit
+
 
     fun updateDarkMode(enabled: Boolean) {
         viewModelScope.launch {

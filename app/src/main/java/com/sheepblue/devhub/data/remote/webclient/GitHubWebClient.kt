@@ -35,7 +35,7 @@ class GitHubWebClient (private val service: GitHubService = RetrofitInitializer(
             )
         }
 
-        Log.d("DEBUG",
+        Log.d("API",
             "Restantes: ${profileResponse.headers()["x-ratelimit-remaining"]}" +
                     "\n+1 em: ${profileResponse.headers()["x-ratelimit-reset"]}" +
                     "\nreposResponse: $reposResponse")
@@ -47,21 +47,3 @@ class GitHubWebClient (private val service: GitHubService = RetrofitInitializer(
         )
     }
 }
-
-//                return UserProfileUiState(
-//                    login = profileResponseBody?.login ?: "",
-//                    name = profileResponseBody?.name?: "~ sem nome ~",
-//                    bio = profileResponseBody?.bio?: "~ sem bio ~",
-//                    image = profileResponseBody?.avatar_url?: "",
-//                    repositories = reposResponse.map { repo ->
-//                        UserRepositoryUiState(
-//                            name = repo.name?: "",
-//                            description = repo.description?: ""
-//                        )
-//                    }
-////            login = "login_teste",
-////            name = "name_teste",
-////            bio = "bio_teste",
-////            image = "",
-////            repositories = emptyList()
-//                )
