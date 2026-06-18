@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.sheepblue.devhub.data.remote.model.GitHubRateLimit
 import com.sheepblue.devhub.ui.components.common.BackButton
 import com.sheepblue.devhub.ui.theme.DevHubTheme
 
@@ -19,7 +20,7 @@ fun SettingsLayout(
     onBackClick: () -> Unit,
     checked: Boolean,
     onCheck: (Boolean) -> Unit,
-    rateLimit: List<Long?> // TODO: preparar para trabalhar com objeto GitHubRateLimit
+    rateLimit: GitHubRateLimit?
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -37,10 +38,10 @@ fun SettingsLayout(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Requisição da API")
-            Text(text = "Limite: ${rateLimit[0] ?: "vazio"}")
-            Text(text = "Restantes: ${rateLimit[1] ?: "vazio"}")
-            Text(text = "Reset: ${rateLimit[2] ?: "vazio"}")
-            Text(text = "Utilizado: ${rateLimit[3] ?: "vazio"}")
+            Text(text = "Limite: ${rateLimit?.limit ?: "vazio"}")
+            Text(text = "Restantes: ${rateLimit?.remaining ?: "vazio"}")
+            Text(text = "Reset: ${rateLimit?.reset ?: "vazio"}")
+            Text(text = "Utilizado: ${rateLimit?.used ?: "vazio"}")
         }
     }
 }
@@ -52,7 +53,7 @@ fun SettingsLayoutPreview() {
         onBackClick = {},
         checked = false,
         onCheck = {},
-        rateLimit = listOf(10.toLong(), null, 3.toLong(), 7.toLong())
+        rateLimit = null
     )
 }
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -66,7 +67,12 @@ fun SettingsLayoutDarkPreview() {
                 onBackClick = {},
                 checked = true,
                 onCheck = {},
-                rateLimit = listOf(null, null, 3.toLong(), 7.toLong())
+                rateLimit = GitHubRateLimit(
+                    limit = null,
+                    remaining = 0,
+                    reset = 172390.toLong(),
+                    used = null
+                )
             )
 
         }

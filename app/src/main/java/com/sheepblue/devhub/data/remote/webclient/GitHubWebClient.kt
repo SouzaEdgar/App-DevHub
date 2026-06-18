@@ -18,6 +18,7 @@ class GitHubWebClient (private val service: GitHubService = RetrofitInitializer(
 
     suspend fun findProfileBy(user: String): GitHubResponse {
         val profileResponse = service.findProfileBy(user)
+        Log.d("Teste", "user: $user")
         val profileInfos = profileResponse.body()
 
         val currentLimit = GitHubRateLimit(
@@ -26,24 +27,31 @@ class GitHubWebClient (private val service: GitHubService = RetrofitInitializer(
             reset = profileResponse.headers()["x-ratelimit-reset"]?.toLongOrNull(),
             used = profileResponse.headers()["x-ratelimit-used"]?.toLongOrNull()
         )
+        Log.d("Teste", "limit: $currentLimit")
 
-        val reposResponse = service.findRepositoryBy(user)
-        val profileRepos: List<GitHubRepository> = reposResponse.map { repo ->
-            GitHubRepository(
-                name = repo.name,
-                description = repo.description
+        try {
+            val reposResponse = service.findRepositoryBy(user)
+            val profileRepos: List<GitHubRepository> = reposResponse.map { repo ->
+                GitHubRepository(
+                    name = repo.name,
+                    description = repo.description
+                )
+            }
+            // Se passar retornar GitHubResponse completo
+            return GitHubResponse(
+                profile = profileInfos?: nullGitHubProfile,
+                repositories = profileRepos,
+                rateLimit = currentLimit
+            )
+        } catch (e: Exception) {
+            Log.d("Teste", "reposResponse(): $e")
+            Log.d("Teste", "reposResponse(): $currentLimit")
+            // entregar um Response vazio
+            return GitHubResponse(
+                profile = nullGitHubProfile,
+                repositories = emptyList(),
+                rateLimit = currentLimit
             )
         }
-
-        Log.d("API",
-            "Restantes: ${profileResponse.headers()["x-ratelimit-remaining"]}" +
-                    "\n+1 em: ${profileResponse.headers()["x-ratelimit-reset"]}" +
-                    "\nreposResponse: $reposResponse")
-
-        return GitHubResponse(
-            profile = profileInfos?: nullGitHubProfile,
-            repositories = profileRepos,
-            rateLimit = currentLimit
-        )
     }
 }

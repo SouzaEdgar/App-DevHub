@@ -1,6 +1,5 @@
 package com.sheepblue.devhub.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -27,33 +26,34 @@ class UserViewModel(
                 errorMessage = null
             )
 
-            try {
-                val myClient = webClient.findProfileBy(user = user)
-                response.updateResponse(response = myClient) // atualizar os dados da ResponseRepository
+            val myClient = webClient.findProfileBy(user)
+            response.updateResponse(response = myClient)
 
+            // TODO: Dispara tela de erro por LIMITE de request da API (rate-limit bateu 60)
+            // Dispara tela de erro por login vazio
+            if (myClient.profile.login.isEmpty()) {
+                uiState = uiState.copy(
+                    isLoading = false,
+                    errorMessage = "Não foi possível localizar usuário"
+                )
+            } else { // Dispara informações do usuario na tela (uiState)
                 val myProfile = myClient.profile
                 val myRepositories = myClient.repositories
 
                 uiState = uiState.copy(
                     login = myProfile.login,
-                    name = myProfile.name?: "",
-                    bio = myProfile.bio?: "",
-                    image = myProfile.avatar_url?: "",
+                    name = myProfile.name ?: "",
+                    bio = myProfile.bio ?: "",
+                    image = myProfile.avatar_url ?: "",
                     repositories = myRepositories.map { repo ->
                         UserRepositoryUiState(
-                            name = repo.name?: "",
-                            description = repo.description?: ""
+                            name = repo.name ?: "",
+                            description = repo.description ?: ""
                         )
                     },
                     isLoading = false,
                     errorMessage = null
                 )
-            } catch (e: Exception) {
-                uiState = uiState.copy(
-                    isLoading = false,
-                    errorMessage = "Usuário não encontrado"
-                )
-                Log.d("API", "UserViewModel: $e")
             }
         }
     }
