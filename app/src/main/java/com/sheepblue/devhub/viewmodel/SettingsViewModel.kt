@@ -13,10 +13,8 @@ class SettingsViewModel(
     private val response: GitHubResponseRepository
 ): ViewModel() {
     var isDarkMode = settingsDataStore.isDarkMode
-    // TODO: (1°) preparar rateLimit para OBSERVAR o valor de .value?.rateLimit ao inves de apenas ler
-    //     algo como StateFlow<GitHubResponse?>, Flow<...> (
 
-    val currentResponse: StateFlow<GitHubResponse?> = response.currentResponse
+    val currentResponse: StateFlow<GitHubResponse> = response.currentResponse
 
     fun updateDarkMode(enabled: Boolean) {
         viewModelScope.launch {

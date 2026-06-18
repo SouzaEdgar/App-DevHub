@@ -19,7 +19,7 @@ class GitHubResponseRepository {
 
     //private val _currentResponse = MutableStateFlow<GitHubResponse?>(value = null)
     private val _currentResponse = MutableStateFlow(value = mockResponse)
-    val currentResponse: StateFlow<GitHubResponse?> = _currentResponse.asStateFlow()
+    val currentResponse: StateFlow<GitHubResponse> = _currentResponse.asStateFlow()
 
     fun updateResponse(response: GitHubResponse) {
         _currentResponse.update { resp ->
@@ -30,9 +30,9 @@ class GitHubResponseRepository {
             )
         }
         Log.d("API", "rateLimit com stateFlow: " +
-                "\n>> Profile: ${currentResponse.value?.profile}" +
-                "\n>> Repositorios: ${currentResponse.value?.repositories}" +
-                "\n>> Rate-limit: ${currentResponse.value?.rateLimit}"
+                "\n>> Profile: ${currentResponse.value.profile}" +
+                "\n>> Repositorios: ${currentResponse.value.repositories}" +
+                "\n>> Rate-limit: ${currentResponse.value.rateLimit}"
         )
     }
 }

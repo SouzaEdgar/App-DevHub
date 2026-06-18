@@ -12,15 +12,15 @@ import com.sheepblue.devhub.viewmodel.SettingsViewModel
 fun SettingsScreen(onBackClick: () -> Unit, viewModel: SettingsViewModel) {
     val isDarkMode by viewModel.isDarkMode.collectAsState(initial = false)
 
-    val userResponse by viewModel.currentResponse.collectAsState(initial = null)
-    Log.d("API", "SettingsScreen: userRateLimit >> ${userResponse?.rateLimit}")
+    val userResponse by viewModel.currentResponse.collectAsState() // ja vem preenchido com o mockResponse, então nunca é null
+    Log.d("API", "SettingsScreen: userRateLimit >> ${userResponse.rateLimit}")
 
 
     SettingsLayout(
         onBackClick = { onBackClick() },
         checked = isDarkMode,
         onCheck = { viewModel.updateDarkMode(enabled = it) },
-        rateLimit = userResponse?.rateLimit
+        rateLimit = userResponse.rateLimit
     )
 }
 
