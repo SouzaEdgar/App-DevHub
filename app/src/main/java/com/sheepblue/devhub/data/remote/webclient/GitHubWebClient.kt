@@ -2,38 +2,56 @@ package com.sheepblue.devhub.data.remote.webclient
 
 import android.util.Log
 import com.sheepblue.devhub.data.RetrofitInitializer
+import com.sheepblue.devhub.data.remote.model.GitHubProfileWeb
+import com.sheepblue.devhub.data.remote.model.GitHubRateLimit
+import com.sheepblue.devhub.data.remote.model.GitHubRepository
+import com.sheepblue.devhub.data.remote.model.GitHubResponse
 import com.sheepblue.devhub.data.remote.service.GitHubService
-import com.sheepblue.devhub.ui.state.UserProfileUiState
-import com.sheepblue.devhub.ui.state.UserRepositoryUiState
 
 class GitHubWebClient (private val service: GitHubService = RetrofitInitializer().gitHubService) {
+    private val nullGitHubProfile = GitHubProfileWeb(
+        login = "",
+        name = "",
+        bio = "",
+        avatar_url = ""
+    )
 
-    suspend fun findProfileBy(user: String): UserProfileUiState {
+    suspend fun findProfileBy(user: String): GitHubResponse {
         val profileResponse = service.findProfileBy(user)
-        val profileResponseBody = profileResponse.body()
-        val profileResponseHeader = profileResponse.headers()
+        Log.d("Teste", "user: $user")
+        val profileInfos = profileResponse.body()
 
-        val reposResponse = service.findRepositoryBy(user)
+        val currentLimit = GitHubRateLimit(
+            limit = profileResponse.headers()["x-ratelimit-limit"]?.toLongOrNull(),
+            remaining = profileResponse.headers()["x-ratelimit-remaining"]?.toLongOrNull(),
+            reset = profileResponse.headers()["x-ratelimit-reset"]?.toLongOrNull(),
+            used = profileResponse.headers()["x-ratelimit-used"]?.toLongOrNull()
+        )
+        Log.d("Teste", "limit: $currentLimit")
 
-        Log.d("DEBUG", "Restantes: ${profileResponseHeader.get("x-ratelimit-remaining")}\n+1 em: ${profileResponseHeader["x-ratelimit-reset"]}\nreposResponse: $reposResponse")
-
-        // retorna com a conversao ja feita (mapper)
-        return UserProfileUiState(
-            login = profileResponseBody?.login ?: "",
-            name = profileResponseBody?.name?: "~ sem nome ~",
-            bio = profileResponseBody?.bio?: "~ sem bio ~",
-            image = profileResponseBody?.avatar_url?: "",
-            repositories = reposResponse.map { repo ->
-                UserRepositoryUiState(
-                    name = repo.name?: "",
-                    description = repo.description?: ""
+        try {
+            val reposResponse = service.findRepositoryBy(user)
+            val profileRepos: List<GitHubRepository> = reposResponse.map { repo ->
+                GitHubRepository(
+                    name = repo.name,
+                    description = repo.description
                 )
             }
-//            login = "login_teste",
-//            name = "name_teste",
-//            bio = "bio_teste",
-//            image = "",
-//            repositories = emptyList()
-        )
+            // Se passar retornar GitHubResponse completo
+            return GitHubResponse(
+                profile = profileInfos?: nullGitHubProfile,
+                repositories = profileRepos,
+                rateLimit = currentLimit
+            )
+        } catch (e: Exception) {
+            Log.d("Teste", "reposResponse(): $e")
+            Log.d("Teste", "reposResponse(): $currentLimit")
+            // entregar um Response vazio
+            return GitHubResponse(
+                profile = nullGitHubProfile,
+                repositories = emptyList(),
+                rateLimit = currentLimit
+            )
+        }
     }
 }
