@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -17,25 +18,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sheepblue.devhub.R
 import com.sheepblue.devhub.ui.theme.DevHubTheme
 
 @Composable
-fun ThemeSelector(checked: Boolean, onCheck: (Boolean) -> Unit) {
+fun ThemeSelector(
+    checked: Boolean,
+    onCheck: (Boolean) -> Unit
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Modo Escuro",
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp
+            text = "Modo Escuro"
         )
         Switch(
-
             checked = checked,
             onCheckedChange = { onCheck(it) },
 //            colors = SwitchDefaults.colors(
