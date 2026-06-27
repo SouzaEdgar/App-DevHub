@@ -2,7 +2,6 @@ package com.sheepblue.devhub.ui.components.settings
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,12 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -33,21 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sheepblue.devhub.data.remote.model.GitHubRateLimit
 import com.sheepblue.devhub.ui.components.common.BackButton
-import com.sheepblue.devhub.ui.theme.BackgroundLight
-import com.sheepblue.devhub.ui.theme.BorderDark
-import com.sheepblue.devhub.ui.theme.BorderLight
 import com.sheepblue.devhub.ui.theme.DevHubTheme
-import com.sheepblue.devhub.ui.theme.SurfaceDark
-import com.sheepblue.devhub.ui.theme.SurfaceHeaderDark
-import com.sheepblue.devhub.ui.theme.SurfaceHeaderLight
-import com.sheepblue.devhub.ui.theme.SurfaceLight
-import kotlinx.coroutines.delay
-import java.time.Instant
-import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun SettingsLayout(
@@ -122,7 +101,7 @@ fun SettingsLayout(
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            if(rateLimit != null) {
+            if(rateLimit?.used != null) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
