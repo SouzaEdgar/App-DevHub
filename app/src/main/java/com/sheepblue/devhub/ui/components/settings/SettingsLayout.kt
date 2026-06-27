@@ -2,6 +2,7 @@ package com.sheepblue.devhub.ui.components.settings
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,8 +16,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -25,7 +33,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sheepblue.devhub.data.remote.model.GitHubRateLimit
 import com.sheepblue.devhub.ui.components.common.BackButton
+import com.sheepblue.devhub.ui.theme.BackgroundLight
+import com.sheepblue.devhub.ui.theme.BorderDark
+import com.sheepblue.devhub.ui.theme.BorderLight
 import com.sheepblue.devhub.ui.theme.DevHubTheme
+import com.sheepblue.devhub.ui.theme.SurfaceDark
+import com.sheepblue.devhub.ui.theme.SurfaceHeaderDark
+import com.sheepblue.devhub.ui.theme.SurfaceHeaderLight
+import com.sheepblue.devhub.ui.theme.SurfaceLight
+import kotlinx.coroutines.delay
+import java.time.Instant
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun SettingsLayout(
@@ -55,7 +77,7 @@ fun SettingsLayout(
             }
         }
         HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 0.5.dp)
-        Spacer(modifier = Modifier.height(42.dp))
+        Spacer(modifier = Modifier.height(52.dp))
         // ESCOLHA DO TEMA
         Column(
             modifier = Modifier
@@ -75,7 +97,7 @@ fun SettingsLayout(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(size = 24.dp))
-                    .background(Color(0xFF474747))
+                    .background(color = MaterialTheme.colorScheme.surface)
                     .padding(horizontal = 20.dp)
             ) {
                 ThemeSelector(
@@ -84,7 +106,7 @@ fun SettingsLayout(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(22.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         // INFO API
         Column(
             modifier = Modifier
@@ -100,34 +122,67 @@ fun SettingsLayout(
             )
             Spacer(modifier = Modifier.height(10.dp))
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(size = 24.dp))
-                    .background(Color(0xFF474747))
-                    .padding(horizontal = 20.dp, vertical = 18.dp)
-            ) {
-                Column {
-                    SettingsInfoRowAPI(
-                        info = "Limite:",
-                        result = "${rateLimit?.limit ?: "vazio"}",
-                    )
-                    SettingsInfoRowAPI(
-                        info = "Restantes:",
-                        result = "${rateLimit?.remaining ?: "vazio"}",
-                    )
-                    SettingsInfoRowAPI(
-                        info = "Reset:",
-                        result = "${rateLimit?.reset ?: "vazio"}",
-                    )
-                    SettingsInfoRowAPI(
-                        info = "Utilizado:",
-                        result = "${rateLimit?.used ?: "vazio"}",
-                    )
+            if(rateLimit != null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(shape = RoundedCornerShape(size = 24.dp))
+                        .background(color = MaterialTheme.colorScheme.surface)
+                        .padding(horizontal = 20.dp, vertical = 18.dp)
+                ) {
+                    Column {
+                        SettingsInfoRowAPI(
+                            info = "Limite:",
+                            result = "${rateLimit.limit ?: "-"}",
+                        )
+                        SettingsInfoRowAPI(
+                            info = "Restantes:",
+                            result = "${rateLimit.remaining ?: "-"}",
+                        )
+                        SettingsInfoRowAPI(
+                            info = "Utilizado:",
+                            result = "${rateLimit.used ?: "-"}",
+                        )
+                        SettingsInfoRowAPI(
+                            info = "Reset:",
+                            result = convertToMinute(rateLimit.reset),
+                        )
+                    }
+                }
+                Text(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    text = "• Valores atualizados a cada busca realizada\n" +
+                            "• Cada busca utiliza 2 requisições",
+                    color = Color.Gray,
+                    fontSize = 12.sp,
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(shape = RoundedCornerShape(size = 24.dp))
+                        .background(color = MaterialTheme.colorScheme.surface)
+                        .padding(horizontal = 20.dp, vertical = 18.dp)
+                ) {
+                    Column {
+                        Text(
+                            text = "Faça uma busca para obter resultados",
+                            modifier = Modifier.alpha(0.6f)
+                        )
+                    }
                 }
             }
         }
     }
+}
+
+fun convertToMinute(num: Long?): String {
+    if (num != null) {
+        // Joga os dois para segundos (api ja retorna em segundso) e depois converte para minuto
+        val minutes = (num - System.currentTimeMillis()/1000) / 60
+        return "$minutes minutos"
+    }
+    return "-"
 }
 
 @Preview(showBackground = true)
@@ -144,7 +199,7 @@ fun SettingsLayoutPreview() {
                 rateLimit = GitHubRateLimit(
                     limit = null,
                     remaining = 0,
-                    reset = 172390.toLong(),
+                    reset = 1782524476.toLong(),
                     used = null
                 )
             )
@@ -163,12 +218,7 @@ fun SettingsLayoutDarkPreview() {
                 onBackClick = {},
                 checked = true,
                 onCheck = {},
-                rateLimit = GitHubRateLimit(
-                    limit = null,
-                    remaining = 0,
-                    reset = 172390.toLong(),
-                    used = null
-                )
+                rateLimit = null
             )
 
         }
