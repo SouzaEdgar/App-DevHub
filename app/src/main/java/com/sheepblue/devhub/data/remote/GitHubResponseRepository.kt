@@ -1,6 +1,7 @@
 package com.sheepblue.devhub.data.remote
 
 import android.util.Log
+import com.sheepblue.devhub.data.remote.model.GitHubError
 import com.sheepblue.devhub.data.remote.model.GitHubProfileWeb
 import com.sheepblue.devhub.data.remote.model.GitHubRateLimit
 import com.sheepblue.devhub.data.remote.model.GitHubResponse
@@ -14,7 +15,8 @@ class GitHubResponseRepository {
     private val mockResponse = GitHubResponse(
         profile = GitHubProfileWeb(login = "", name = "", bio = "", avatar_url = ""),
         repositories = emptyList(),
-        rateLimit = GitHubRateLimit(used = null, reset = null, remaining = null, limit = null)
+        rateLimit = GitHubRateLimit(used = null, reset = null, remaining = null, limit = null),
+        error = GitHubError.NONE
     )
 
     //private val _currentResponse = MutableStateFlow<GitHubResponse?>(value = null)
