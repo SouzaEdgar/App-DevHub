@@ -5,5 +5,5 @@ enum class GitHubError {
     NONE,
     NO_USER,
     RATE_LIMIT,
-    UNKNOW
+    UNKNOWN
 }
