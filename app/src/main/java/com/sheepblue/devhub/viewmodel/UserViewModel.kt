@@ -1,5 +1,6 @@
 package com.sheepblue.devhub.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -26,10 +27,11 @@ class UserViewModel(
                 errorMessage = null
             )
 
+            Log.d("Teste", "chama myClient")
             val myClient = webClient.findProfileBy(user)
             response.updateResponse(response = myClient)
 
-            // TODO: Dispara tela de erro por LIMITE de request da API (rate-limit bateu 60)
+            // TODO: Trabalha com as opções de GitHubError
             // Dispara tela de erro por login vazio
             if (myClient.profile.login.isEmpty()) {
                 uiState = uiState.copy(

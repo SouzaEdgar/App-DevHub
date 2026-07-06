@@ -4,5 +4,7 @@ package com.sheepblue.devhub.data.remote.model
 data class GitHubResponse(
     val profile: GitHubProfileWeb,
     val repositories: List<GitHubRepository>,
-    val rateLimit: GitHubRateLimit
+    val rateLimit: GitHubRateLimit,
+
+    val error: GitHubError
 )
