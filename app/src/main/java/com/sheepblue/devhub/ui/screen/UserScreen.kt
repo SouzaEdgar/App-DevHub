@@ -36,15 +36,12 @@ fun UserScreen(
 
         uiState.errorMessage != null -> {
             Log.d("API", "errorMessage: ${uiState.errorMessage}")
-            UserError(onClick = {
-                onBackClick()
-            })
+            UserError(onClick = { onBackClick() },
+                errorMessage = uiState.errorMessage)
         }
 
         else -> {
-            UserProfile(userInfos = uiState, onClick = {
-                onBackClick()
-            })
+            UserProfile(userInfos = uiState, onClick = { onBackClick() })
         }
     }
 }

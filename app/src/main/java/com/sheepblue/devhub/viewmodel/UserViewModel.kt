@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sheepblue.devhub.data.remote.GitHubResponseRepository
+import com.sheepblue.devhub.data.remote.model.GitHubError
 import com.sheepblue.devhub.data.remote.webclient.GitHubWebClient
 import com.sheepblue.devhub.ui.state.UserProfileUiState
 import com.sheepblue.devhub.ui.state.UserRepositoryUiState
@@ -27,18 +28,24 @@ class UserViewModel(
                 errorMessage = null
             )
 
-            Log.d("Teste", "chama myClient")
+            Log.d("API", "UserViewModel -> chama myClient")
             val myClient = webClient.findProfileBy(user)
             response.updateResponse(response = myClient)
 
-            // TODO: Trabalha com as opções de GitHubError
-            // Dispara tela de erro por login vazio
-            if (myClient.profile.login.isEmpty()) {
+            // opções de GitHubError
+            val message = when(myClient.error) {
+                GitHubError.NO_USER -> "Não foi possível encontrar o usuário"
+                GitHubError.RATE_LIMIT -> "Atingiu o limite de requisições da API"
+                GitHubError.UNKNOWN -> "Não foi possível realizar a busca"
+                else -> null
+            }
+            if (message != null) {
                 uiState = uiState.copy(
                     isLoading = false,
-                    errorMessage = "Não foi possível localizar usuário"
+                    errorMessage = message
                 )
-            } else { // Dispara informações do usuario na tela (uiState)
+            } else {
+                // Dispara informações do usuario na tela (uiState)
                 val myProfile = myClient.profile
                 val myRepositories = myClient.repositories
 

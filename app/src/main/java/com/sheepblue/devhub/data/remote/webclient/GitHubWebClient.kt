@@ -38,6 +38,7 @@ class GitHubWebClient (private val service: GitHubService = RetrofitInitializer(
             Log.d("API", "limit: $currentLimit")
 
             if (currentLimit.used != null && currentLimit.limit != null && currentLimit.used >= currentLimit.limit) {
+                Log.d("API", "erro: Rate limit except")
                 return GitHubResponse(
                     profile = profileInfos?: nullGitHubProfile,
                     repositories = emptyList(),

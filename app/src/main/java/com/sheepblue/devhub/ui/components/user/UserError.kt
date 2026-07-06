@@ -2,7 +2,6 @@ package com.sheepblue.devhub.ui.components.user
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,21 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sheepblue.devhub.R
 import com.sheepblue.devhub.ui.components.common.BackButton
-import com.sheepblue.devhub.ui.theme.SurfaceHeaderDark
-import com.sheepblue.devhub.ui.theme.SurfaceHeaderLight
 
 @Composable
-fun UserError(onClick: () -> Unit) {
+fun UserError(
+    onClick: () -> Unit,
+    errorMessage: String
+) {
     val avatarSize = 160.dp
     val avatarOffset = avatarSize / 2.5f
-
-    val headerBackground =
-        if(isSystemInDarkTheme()) {
-            SurfaceHeaderDark
-        }
-        else {
-            SurfaceHeaderLight
-        }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -64,7 +56,7 @@ fun UserError(onClick: () -> Unit) {
                     .fillMaxWidth()
                     .height(140.dp)
                     .background(
-                        color = headerBackground,
+                        color = MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(
                             bottomStart = 22.dp,
                             bottomEnd = 22.dp
@@ -113,7 +105,7 @@ fun UserError(onClick: () -> Unit) {
         }
         Spacer(modifier = Modifier.height(180.dp / 2))
         Text(
-            text = "Não foi possível encontrar usuário",
+            text = errorMessage,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
@@ -123,5 +115,8 @@ fun UserError(onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun UserErrorPreview() {
-    UserError(onClick = {})
+    UserError(
+        onClick = {},
+        errorMessage = "Mensagem de erro"
+    )
 }
